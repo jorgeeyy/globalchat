@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:globalchat/providers/user_provider.dart';
+import 'package:globalchat/screens/edit_profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -18,13 +19,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     var userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
-      appBar: AppBar(title: Text('Profile')),
-      body: Column(
-        children: [
-          Text(userProvider.userName),
-          Text(userProvider.userEmail),
-          Text(userProvider.userId),
-        ],
+      appBar: AppBar(title: Text('')),
+      body: Container(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleAvatar(radius: 50, child: Text(userProvider.userName[0])),
+            SizedBox(height: 8),
+            Text(
+              userProvider.userName,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+            SizedBox(height: 3),
+            Text(userProvider.userEmail),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EditProfileScreen()),
+              ),
+              child: Text('Edit Profile'),
+            ),
+          ],
+        ),
       ),
     );
   }
