@@ -8,11 +8,10 @@ class UserProvider extends ChangeNotifier {
   String userId = '';
   Map<String, dynamic>? userData = {};
 
-  var authUser = FirebaseAuth.instance.currentUser;
   var db = FirebaseFirestore.instance;
 
   void getUserDetails() async {
-    // Example function to fetch user profile data from Firestore
+    var authUser = FirebaseAuth.instance.currentUser;
     db.collection('users').doc(authUser!.uid).get().then((datasnapshot) {
       // userData = datasnapshot.data();
       userName = datasnapshot.data()?["name"] ?? '';
@@ -22,11 +21,4 @@ class UserProvider extends ChangeNotifier {
       // setState(() {});
     });
   }
-
-  // String get username => _username;
-
-  // void setUsername(String username) {
-  //   _username = username;
-  //   notifyListeners();
-  // }
 }

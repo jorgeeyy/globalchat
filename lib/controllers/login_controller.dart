@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:globalchat/screens/dashboard_screen.dart';
+import 'package:globalchat/screens/splash_screen.dart';
 
 class LoginController {
   static Future<void> login({
@@ -16,10 +16,10 @@ class LoginController {
 
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => DashboardScreen()),
+        MaterialPageRoute(builder: (context) => SplashScreen()),
         (route) => false,
       );
-      print('account created successfully');
+      print('account logged in successfully');
     } catch (e) {
       SnackBar messageSnackbar = SnackBar(content: Text(e.toString()));
       ScaffoldMessenger.of(context).showSnackBar(messageSnackbar);

@@ -53,8 +53,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               radius: 20,
               child: Text(
                 userProvider.userName.isNotEmpty
-                    ? userProvider.userName[0].toUpperCase()
-                    : '',
+                    ? userProvider.userName[0]
+                    : '?',
               ),
             ),
           ),
@@ -68,8 +68,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               leading: CircleAvatar(
                 child: Text(
                   userProvider.userName.isNotEmpty
-                      ? userProvider.userName[0].toUpperCase()
-                      : '',
+                      ? userProvider.userName[0]
+                      : '?',
                 ),
               ),
               title: Text(
@@ -118,7 +118,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             leading: CircleAvatar(
               backgroundColor: Colors.blue[800],
               foregroundColor: Colors.white,
-              child: Text(chatroomName[0].toUpperCase()),
+              child: Text(
+                chatroomName.isNotEmpty ? chatroomName[0].toUpperCase() : '?',
+              ),
             ),
             title: Text(chatroomName),
             subtitle: Text(chatroomsList[index]["desc"] ?? 'no description'),

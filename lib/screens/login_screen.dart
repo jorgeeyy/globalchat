@@ -14,6 +14,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,16 +69,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           backgroundColor: Colors.blue,
                           foregroundColor: Colors.white,
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (userform.currentState!.validate()) {
-                            LoginController.login(
+                            isLoading = true;
+                            setState(() {});
+                            await LoginController.login(
                               context: context,
                               email: emailController.text,
                               password: passwordController.text,
                             );
+                            isLoading = false;
+                            setState(() {});
                           }
                         },
-                        child: Text('Login'),
+                        child: isLoading
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Text('Login'),
                       ),
                     ),
                   ],

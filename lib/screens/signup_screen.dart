@@ -15,6 +15,8 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController countryController = TextEditingController();
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,18 +96,29 @@ class _SignupScreenState extends State<SignupScreen> {
                               backgroundColor: Colors.blue,
                               foregroundColor: Colors.white,
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               if (userform.currentState!.validate()) {
-                                SignupController.createAccount(
+                                isLoading = true;
+                                setState(() {});
+                                await SignupController.createAccount(
                                   context: context,
                                   email: emailController.text,
                                   password: passwordController.text,
                                   name: nameController.text,
                                   country: countryController.text,
                                 );
+                                isLoading = false;
+                                setState(() {});
                               }
                             },
-                            child: Text('Create account'),
+                            child: isLoading
+                                ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Text('Create account'),
                           ),
                         ),
                       ],
