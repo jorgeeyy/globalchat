@@ -17,14 +17,20 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
+      // appBar: AppBar(title: Text('Login')),
       body: Form(
         key: userform,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: Image.asset('assets/images/logo.png'),
+                ),
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: emailController,
@@ -52,17 +58,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   autocorrect: false,
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    if (userform.currentState!.validate()) {
-                      LoginController.login(
-                        context: context,
-                        email: emailController.text,
-                        password: passwordController.text,
-                      );
-                    }
-                  },
-                  child: Text('Login'),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(0, 50),
+                          backgroundColor: Colors.blue,
+                          foregroundColor: Colors.white,
+                        ),
+                        onPressed: () {
+                          if (userform.currentState!.validate()) {
+                            LoginController.login(
+                              context: context,
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
+                          }
+                        },
+                        child: Text('Login'),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 20),
                 Row(
