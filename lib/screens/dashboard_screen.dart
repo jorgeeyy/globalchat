@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:globalchat/providers/user_provider.dart';
+import 'package:globalchat/screens/chatroom_screen.dart';
 import 'package:globalchat/screens/profile_screen.dart';
 import 'package:globalchat/screens/splash_screen.dart';
 import 'package:provider/provider.dart' show Provider;
@@ -19,12 +20,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<Map<String, dynamic>> chatroomsList = [];
+  List<String> chatroomId = [];
 
   void getChatrooms() {
     db.collection('chatrooms').get().then((dataSnapshot) {
       chatroomsList.clear();
       for (var singleChatroomData in dataSnapshot.docs) {
         chatroomsList.add(singleChatroomData.data());
+        chatroomId.add(singleChatroomData.id.toString());
       }
     });
     setState(() {});
@@ -115,6 +118,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         itemBuilder: (BuildContext context, int index) {
           String chatroomName = chatroomsList[index]["chatroom_name"] ?? '';
           return ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatrommScreen(
+                    chatroomId: chatroomId[index],
+                    chatroomName: chatroomName,
+                  ),
+                ),
+              );
+            },
             leading: CircleAvatar(
               backgroundColor: Colors.blue[800],
               foregroundColor: Colors.white,
